@@ -22,6 +22,21 @@ $(document).ready(function () {
       what: "What year did Constantinople fall to the Ottomans?",
       answer: "1452",
       options: ["1452", "1204", "1492", "7"]
+    },
+    four = {
+      what: "Which of these was the name of a Roman Emperor?",
+      answer: "Pupienus",
+      options: ["Biggus Dickus", "Cicero", "Pupienus", "Maximus Dickus"]
+    },
+    five = {
+      what: "What god is the head of the Roman Pantheon?",
+      answer: "Jupiter",
+      options: ["Apollo", "Jupiter", "Steven", "Aphrodite"]
+    },
+    six = {
+      what: "Which group was the first to sack Rome?",
+      answer: "Guals",
+      options: ["Guals", "Vandals", "Goths", "Martians"]
     }
 
 
@@ -86,7 +101,7 @@ $(document).ready(function () {
 
     //update clock element
     $("#clock").empty();
-    $("#clock").append(`<h4>${clock}</h4>`)
+    $("#clock").append(`<h4>Time remaining: ${clock}</h4>`)
 
     if (clock <= 0) {
       incorrect()
