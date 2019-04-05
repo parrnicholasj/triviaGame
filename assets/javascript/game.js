@@ -32,11 +32,11 @@ $(document).ready(function () {
   var wrong = 0;
   var clock = 10;
 
-//use set interval to countdown from 10
+  //use set interval to countdown from 10
 
   var timer;
 
-  function goTime(){
+  function goTime() {
     timer = setInterval(timerFunc, 1000);
   }
 
@@ -52,6 +52,8 @@ $(document).ready(function () {
       $("#qBox").append(`<h2>Quiz Finished</h2>`);
       $("#qBox").append(`<h3>Correct Answers: ${correct}</h3>`);
       $("#qBox").append(`<h3>Wrong Answers: ${wrong}</h3>`);
+      clearInterval(timer); //stop anyrunning timers
+      $("#clock").empty();
 
 
     } else if (count < questions.length) {
@@ -66,49 +68,71 @@ $(document).ready(function () {
         $("#qBox").append($option);
 
         //when a question is created set a timer when it goes off auto skip the question
-        
+
       }
-      clock = 10;//reset clock
+      clock = 10; //reset clock
       goTime();
     }
 
   }
 
-  function timerFunc(){
+  function timerFunc() {
 
     //count as wrong answer if not answered on time
-    
+    if (count >= questions.length) {
+      return
+    }
     clock--;
 
     //update clock element
+    $("#clock").empty();
+    $("#clock").append(`<h4>${clock}</h4>`)
 
-    if (clock <= 0 ){incorrect()}
-
+    if (clock <= 0) {
+      incorrect()
+    }
+    console.log("timerFunc");
   }
 
   $("#qBox").on("click", ".btn", function () { //determine if player clicked correct answer
 
     console.log($(this).text());
     if ($(this).text() == questions[count].answer) {
+      $("#qBox").empty();
 
+      $("#qBox").append(`<h2>Correct</h2>`);
       count++;
       correct++;
-      displayQuest(count);
-      //clearTimeout(timer);
+      setTimeout(moveAlong, 3000);
+      clearInterval(timer);
 
     } else {
       incorrect();
-      //clearTimeout(timer);
+
     }
 
   })
 
   function incorrect() {
+    console.log("incorrect");
 
+    //display result and tell answer
+    $("#qBox").empty();
+
+    $("#qBox").append(`<h2>Incorrect</h2>`);
+    $("#qBox").append(`<h2>The answer was: ${questions[count].answer}</h2>`);
     count++;
     wrong++;
-    displayQuest(count);
 
+    setTimeout(moveAlong, 3000);
+
+    clearInterval(timer);
+
+  }
+
+
+  function moveAlong() {
+    displayQuest(count);
   }
 
 
